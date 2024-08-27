@@ -1,0 +1,71 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet author="Ivan.Tasevski" id="20220505-ecimer-001">
+        <createTable tableName="ec_user">
+            <column name="uuid" type="VARCHAR(255)">
+                <constraints primaryKey="true" primaryKeyName="ec_user_pkey"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints unique="true" uniqueConstraintName="ec_user_email_unique"/>
+            </column>
+            <column name="password" type="VARCHAR(255)"/>
+        </createTable>
+        
+        <createTable tableName="ec_user_authorities">
+            <column name="user_uuid" type="VARCHAR(255)"/>
+            <column name="authority" type="VARCHAR(255)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ec_user_authorities" baseColumnNames="user_uuid"
+                                 constraintName="fk_ecimer_user_to_authority" referencedTableName="ec_user"
+                                 referencedColumnNames="uuid"/>
+
+        <createTable tableName="ec_city">
+            <column name="uuid" type="VARCHAR(255)">
+                <constraints primaryKey="true" primaryKeyName="ec_city_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+
+        <createTable tableName="ec_municipality">
+            <column name="uuid" type="VARCHAR(255)">
+                <constraints primaryKey="true" primaryKeyName="ec_municipality_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="city_uuid" type="VARCHAR(255)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ec_municipality" baseColumnNames="city_uuid"
+                                 constraintName="fk_ecimer_city_to_municipality" referencedTableName="ec_city"
+                                 referencedColumnNames="uuid"/>
+        
+        <createTable tableName="ec_post">
+            <column name="uuid" type="VARCHAR(255)">
+                <constraints primaryKey="true" primaryKeyName="ec_post_pkey"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="user_uuid" type="VARCHAR(255)"/>
+            <column name="city_uuid" type="VARCHAR(255)"/>
+            <column name="municipality_uuid" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ec_post" baseColumnNames="user_uuid"
+                                 constraintName="fk_ecimer_user_to_post" referencedTableName="ec_user"
+                                 referencedColumnNames="uuid"/>
+
+        <createTable tableName="ec_comment">
+            <column name="uuid" type="VARCHAR(255)">
+                <constraints primaryKey="true" primaryKeyName="ec_comment_pkey"/>
+            </column>
+            <column name="user_uuid" type="VARCHAR(255)"/>
+            <column name="post_uuid" type="VARCHAR(255)"/>
+            <column name="content" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIMEZONE"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ec_comment" baseColumnNames="post_uuid"
+                                 constraintName="fk_ecimer_post_to_comment" referencedTableName="ec_post"
+                                 referencedColumnNames="uuid"/>
+    </changeSet>
+</databaseChangeLog>

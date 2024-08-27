@@ -1,0 +1,19 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet author="Ivan.Tasevski" id="20220506-ecimer-003">
+
+        <createTable tableName="ec_successful_initialization_scenario">
+            <column name="uuid" type="VARCHAR(255)">
+                <constraints primaryKey="true" primaryKeyName="ec_successful_initialization_scenario_pkey"/>
+            </column>
+            <column name="initialization_scenario_name" type="VARCHAR(255)">
+                <constraints unique="true" uniqueConstraintName="ec_successful_initialization_scenario_unique_name"/>
+            </column>
+            <column name="initialized_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

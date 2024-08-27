@@ -1,0 +1,18 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet author="Ivan.Tasevski" id="20220506-ecimer-005">
+
+        <createTable tableName="ec_visited_post">
+            <column name="uuid" type="VARCHAR(255)">
+                <constraints primaryKey="true" primaryKeyName="ec_visited_post_pkey"/>
+            </column>
+            <column name="user_uuid" type="VARCHAR(255)"/>
+            <column name="post_uuid" type="VARCHAR(255)"/>
+            <column name="visited_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>
